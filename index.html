@@ -1116,3 +1116,108 @@
       &lt;/div&gt;
     &lt;/div&gt;
   &lt;/body&gt;&lt;/html&gt;" style="width: 100%; height: 100%; top: 0px;"></iframe>
+<style>
+  /* 1. On force l'affichage en plein écran sans bordures */
+  iframe, .frame-root, .frame-content {
+    border: none !important;
+    outline: none !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    z-index: 999999;
+  }
+
+  /* 2. On s'assure que rien ne dépasse sur les côtés (anti-bug mobile) */
+  html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow-x: hidden !important;
+    width: 100% !important;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* 3. On enlève les contours bleus de sélection du mode édition */
+  .hovered-element, .clicked-element, .clicked-code-section {
+    outline: none !important;
+    border: none !important;
+  }
+</style>
+
+<script>
+  // Ce petit script permet au bouton "Menu" de fonctionner sur téléphone
+  document.addEventListener('DOMContentLoaded', function() {
+    const btn = document.querySelector('[data-landingsite-mobile-menu-toggle]');
+    const menu = document.querySelector('[data-landingsite-mobile-menu]');
+    if (btn && menu) {
+      btn.onclick = function() {
+        menu.classList.toggle('hidden');
+      };
+    }
+  });
+</script>
+<style>
+  /* Supprime le cadre et force le plein écran partout */
+  iframe, .frame-root, .frame-content {
+    border: none !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    margin: 0 !important;
+    z-index: 9999;
+  }
+
+  /* Empêche le site de bouger de gauche à droite sur téléphone */
+  html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow-x: hidden !important;
+    width: 100% !important;
+    height: 100% !important;
+    position: fixed; /* Évite les rebonds bizarres sur mobile */
+  }
+
+  /* Cache les outils d'édition qui créent des bordures bleues */
+  .hovered-element, .clicked-element { 
+    outline: none !important; 
+  }
+</style>
+
+<script>
+  (function() {
+    // 1. Force le "zoom" correct sur téléphone
+    var meta = document.createElement('meta');
+    meta.name = "viewport";
+    meta.content = "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no";
+    document.getElementsByTagName('head')[0].appendChild(meta);
+
+    // 2. Active le menu "Hamburger" pour le mobile
+    document.addEventListener('click', function(e) {
+      if (e.target.closest('[data-landingsite-mobile-menu-toggle]')) {
+        var menu = document.querySelector('[data-landingsite-mobile-menu]');
+        if (menu) {
+          menu.classList.toggle('hidden');
+          menu.style.display = menu.classList.contains('hidden') ? 'none' : 'block';
+          menu.style.backgroundColor = 'white'; // Assure la visibilité
+        }
+      }
+    });
+
+    // 3. Correction des images trop larges sur mobile
+    var fixImages = function() {
+      var imgs = document.querySelectorAll('img');
+      imgs.forEach(function(img) {
+        img.style.maxWidth = '100%';
+        img.style.height = 'auto';
+      });
+    };
+    window.onload = fixImages;
+  })();
+</script>
+
+
